@@ -23,6 +23,7 @@ class Login_con extends CI_Controller {
             $isExistUser = $this->login_mo->checkExistUser($user_nic , $user_password);
             if ($isExistUser) {
                 //echo "AAAA";
+                $this->session->set_userdata('admin' , $user_nic);
                 redirect(base_url('post_con'));
             } else {
                 $data['message'] = "ユーザ名とパスワードが一統ではありません。";
