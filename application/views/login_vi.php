@@ -9,9 +9,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-	<div id="header">
+	<div id="header" style="margin: auto;">
+    <!--
 		<img height="340" src="<?php echo base_url();?>img/title.jpg" width="960" />
-	</div>
+	-->
+        <h1>マイブロッグ</h1>
+    </div>
 	<div id="wrapper">
 		<form name="formlogin" method="post" action="<?php echo base_url();?>login_con">
 			<span style = "padding:20px;color:red; font-size:16px;font-weight:bold;"><?php if(isset($message)){ echo $message;} else { echo '';}?></span>
@@ -19,7 +22,7 @@
 				<legend>ログイン画面</legend>
 					<table>
 						<tr>
-							<td>ご登録ID：社員番号</td>
+							<td>ユーザー名</td>
 							<td><input type="text" name="user_nic"id="user_nic" value='<?php if (isset($user_nic)) { echo $user_nic; } else { echo ''; } ?>' size='10' maxlength='6'>
 							</td>
 						</tr>  
@@ -30,14 +33,16 @@
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-								<input type="submit" name="submit" value="ログイン">
-							</td>
+                                 <div style="margin: auto;margin-top: 10px;">
+								    <input type="submit" name="submit" value="ログイン">
+			                     </div>
+                            </td>
 						</tr>
 					</table>
 			</fieldset>
 		</form>
 		</br>
 		<div style="clear:both">
-		<p style="font-size:20px" align="center">ツアー参加者様の専用サイトです。</p>
+		<p style="font-size:20px" align="center">作成者：チュー・クアン・ヴィエン　日進システムエンジニア</p>
 	</div>
 </div>

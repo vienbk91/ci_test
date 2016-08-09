@@ -16,11 +16,83 @@ class Post_con extends CI_Controller {
         $admin = $this->session->userdata('admin');
         
         if (isset($admin) && $admin != '') {
-            $data = array();
-            $allPost = $this->post_mo->getAllPost();
-            
-            var_dump($allPost);
+           $deleteFlag = 0;
+           $this->loadPostView($deleteFlag);
         } else { // session not exist
+            redirect(base_url('login_con'));
+        }
+    }
+    
+    public function loadPostView($deleteFlag) {
+         $data = array();
+         $allPost = $this->post_mo->getAllPost();
+         $data['allPost'] = $allPost;
+         $data['deleteFlag'] = $deleteFlag;
+           
+         $this->load->view('post_vi' , $data);
+    }
+    
+    public function edit() {
+        // check session
+        $admin = $this->session->userdata('admin');
+        
+        if (isset($admin) && $admin != '') {
+            
+            if ($this->input->post('edit_post') != NULL) {
+               
+                $updatePost = array();
+                $updatePost['post_id'] = $this->input->post('post_id');
+                $updatePost['post_title'] = $this->input->post('post_title');
+                $updatePost['post_content'] = $this->input->post('post_content');
+                
+                $result = $this->post_mo->updatePost($updatePost);
+                
+                if ($result) {
+                    $updateFlag = 1; // update succesfull
+                } else {
+                    $updateFlag = 2; // update lose
+                }
+                
+            } else {
+                $updateFlag = 0;
+            }
+            
+            $data = array();
+            $post_id = $this->input->post('post_id');
+            if (!isset($post_id) || $post_id == '' || $post_id == NULL) {
+                redirect(base_url('post_con'));
+                return;
+            }
+            $post = $this->post_mo->getPostById($post_id);
+            
+            $data['title'] = "変更画面";
+            $data['post'] = $post;
+            $data['updateFlag'] = $updateFlag;
+            
+            $this->load->view('post_edit_vi' , $data);
+            
+           
+        } else {
+            redirect(base_url('login_con'));
+        }
+    }
+    
+    public function delete() {
+        // check session
+        $admin = $this->session->userdata('admin');
+        
+        if (isset($admin) && $admin != '') {
+            $post_id = $this->input->post('post_id');
+            $result = $this->post_mo->deletePost($post_id);
+            
+            if ($result == 1) {
+                $deleteFlag = 1;
+            } else {
+                $deleteFlag = 2;
+            }
+            $this->loadPostView($deleteFlag);
+            
+        } else {
             redirect(base_url('login_con'));
         }
     }
